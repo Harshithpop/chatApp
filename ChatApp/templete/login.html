@@ -1,0 +1,87 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoftBros-Login</title>
+</head>
+<style>
+    body{
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
+    .logo img {
+        margin: auto;
+        display: grid;
+    }
+    .logo {
+        border-bottom: 2px solid rgb(59, 166, 13);
+    }
+    .brand-name {
+        text-align: center;
+        font-size: 22px;
+        font-weight: 600;
+    }
+    input {
+        padding: 4px;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        border: none;
+        outline: none;
+        height: 25px;
+
+    }
+    form{
+        display: flex;
+        flex-direction: column;
+        max-width: 60%;
+        margin: auto;
+        gap: 10px;
+        margin: 40px auto;
+    }
+    button {
+        padding: 4px;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        border: none;
+        color: #363636;
+        padding: 10px;
+        background-color: #fff;
+        font-weight: 700;
+    }
+</style>
+<body>
+    <div class="container">
+        <div class="wrapper">
+            <div class="logo">
+                <img src="{% static 'textBrand.svg' %}" alt="" width="50">
+                <p class="brand-name">Softbros</p>
+            </div>
+            <div class="box">
+                <form action="" id="form">
+                    <input type="text" placeholder="Name" id = text>
+                    <input type="tel" placeholder="Key" id="key">
+                    <button id="logg">Login</button>
+                </form>
+                
+                <br>
+                <p id="err"></p>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        document.getElementById('form').addEventListener('submit',(e)=>{
+            e.preventDefault()
+            const tex = document.getElementById('text');
+            const textval = tex.value
+            const key = document.getElementById('key');
+            if(key.value === '8520'){
+                window.open(`/44444444444555555555555555555555333333333333378888888/${tex.value}`,'_self')
+                
+            }else{
+                document.getElementById('err').textContent='incorrect key'
+            }
+            document.getElementById('form').reset()
+            tex.value = textval
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,240 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoftBros-Login</title>
+    <script src="{% static 'assis.js' %}"></script>
+</head>
+<style>
+    body::-webkit-scrollbar {
+        display: none;
+    }
+
+    .conta {
+        max-width: 496px;
+        min-width: 270px;
+        margin: auto;
+        background-color: rgb(255, 255, 255);
+        color: #323232;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
+
+    .cont-wrap {
+        padding: 15px 20px;
+    }
+
+    .logo {
+        border-bottom: 2px solid rgb(59, 166, 13);
+    }
+
+    #mssgss {
+        height: 68vh;
+        overflow-y: scroll;
+
+
+    }
+
+    #mssgss::-webkit-scrollbar {
+        display: none;
+    }
+
+    .recent-msg,
+    .old-msg {
+        text-align: center;
+        box-shadow: rgba(0, 0, 0, 0.073) 0px 3px 15px;
+        font-size: 18px;
+        padding: 4px;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
+
+    form {
+        margin: auto;
+        max-width: 100%;
+    }
+
+    .brand-name {
+        text-align: center;
+        font-size: 22px;
+        font-weight: 600;
+    }
+
+    .logo img {
+        margin: auto;
+        display: grid;
+    }
+
+    input {
+        padding: 4px;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        border: none;
+        width: 70%;
+        outline: none;
+        height: 25px;
+
+    }
+
+    button {
+        padding: 4px;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        border: none;
+        color: #363636;
+        padding: 10px;
+        background-color: #fff;
+        font-weight: 700;
+    }
+
+    input::placeholder {
+        color: #969696b0;
+        font-weight: 600;
+        font-family: cursive;
+    }
+
+    .suggest {
+        display: flex;
+        flex-direction: row;
+        gap: 4px;
+        display: none;
+
+    }
+
+    .suggest p {
+        border-radius: 20px;
+        border: 1.5px solid purple;
+        display: table;
+        padding: 5px;
+    }
+
+    .assis {
+        color: green;
+        font-weight: 700;
+        position: fixed;
+        top: 100px;
+        right: 30px;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+    }
+
+    .assis:focus {
+        color: purple;
+    }
+
+    .assis:hover {
+        color: purple;
+    }
+</style>
+
+<body>
+    <p onclick="voice()" class="assis">Assistant</p>
+    <script>
+        window.onload = function () {
+            var objDiv = document.getElementById("mssgss");
+            objDiv.scrollTop = objDiv.scrollHeight + 500;
+        };
+    </script>
+    <div class="conta">
+        <div class="cont-wrap">
+            <div class="logo">
+                <img src="{% static 'textBrand.svg' %}" alt="" width="50">
+                <p class="brand-name">Softbros</p>
+
+            </div>
+            <div id="mssgss">
+                {% for i in msgss %}
+                <p class="old-msg">{{i.msg}}</p>
+                {% endfor %}
+                <div id="msgs"></div>
+            </div>
+            <div class="suggest">
+                <p class="suggested" id="suggest1"></p>
+                <p class="suggested" id="suggest2"></p>
+                <p class="suggested" id="suggest3"></p>
+
+            </div>
+            <div>
+                <form action="" id='form'>
+                    <input type="text" name="message" autocomplete="off" id="textbox"
+                        placeholder="Pop waiting for your text">
+                    <button id="sender">send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+        function suggesterMethod(s, u, g) {
+            document.getElementsByClassName('suggest')[0].style.display = 'flex'
+            document.getElementById('suggest1').textContent = s
+            document.getElementById('suggest2').textContent = u
+            document.getElementById('suggest3').textContent = g
+        }
+
+        let url = `ws://${window.location.host}/ws/socket-server/`;
+        const chatSocket = new WebSocket(url);
+        console.log(chatSocket)
+        chatSocket.onmessage = function (e) {
+            let data = JSON.parse(e.data)
+            console.log('Data', data)
+            if (data.type === 'chat') {
+                let dtmsg = data.message
+                let dtmsgSmall = dtmsg.toLowerCase()
+                if (dtmsgSmall.includes('uta')) {
+                    suggesterMethod('Illa nimdu', 'aaitu, nimdu?', 'maadta idini')
+                } else if (dtmsgSmall.includes('nidde')) {
+                    suggesterMethod('enta isht bega', 'No', 'malgi')
+                } else if (dtmsgSmall.includes('shivvv')) {
+                    suggesterMethod('enu', 'Helo', 'kanda')
+                } else if (dtmsgSmall.includes('en dng')) {
+                    suggesterMethod('nothing!', 'work', 'outside idini')
+                } else if (dtmsgSmall.includes('morning')) {
+                    suggesterMethod('Morning baby', 'morning harsh', 'morning shivv')
+                } else if (dtmsgSmall.includes('gn8')) {
+                    suggesterMethod('Gunnite bangru', 'isht bega', 'ha malgo')
+                } else if (dtmsgSmall.includes('thanks')) {
+                    suggesterMethod('welcome!', 'okok', 'hmm')
+                } else if (dtmsgSmall.includes('hm')) {
+                    suggesterMethod('mathe innenta', 'ellirodu', 'sari')
+                } else if (dtmsgSmall.includes('sari')) {
+                    suggesterMethod('en sari', 'shivv', 'harshh')
+                } else if (dtmsgSmall.includes('malgi')) {
+                    suggesterMethod('malgalla', 'nidde maadidde', 'harshh')
+                } else if (dtmsgSmall.includes('enu')) {
+                    suggesterMethod('Nothing!', 'En dng', '')
+                }
+                console.log(chatSocket)
+
+                let messages = document.getElementById('msgs');
+                messages.insertAdjacentHTML('beforeend', `<div>
+                        <p class='recent-msg'>${data.message}</p>
+                    </div>`)
+            }
+            var objDiv = document.getElementById("mssgss");
+            objDiv.scrollTop = objDiv.scrollHeight + 500;
+        }
+        let form = document.getElementById('form');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault()
+            let message = e.target.message.value;
+            if (message != '') {
+                chatSocket.send(JSON.stringify({
+                    'message': message
+                }))
+                form.reset()
+            }
+        })
+
+        document.querySelectorAll('.suggest > p').forEach((p) => {
+            p.addEventListener('click', () => {
+                document.getElementById('textbox').value = p.textContent
+                document.getElementById('sender').click();
+                document.querySelector('.suggest').style.display = 'none'
+            })
+        })
+
+    </script>
+</body>
+
+</html>
